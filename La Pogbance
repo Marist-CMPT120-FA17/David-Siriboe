@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         La Pogbance
+      </title>
+      <h1> La Pogbance</h1>
+      <a HREF="mailto:davidsiriboe@gmail.com">Contact Me!</a>
+      <br>
+      </br>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+              
+         var currentLocation = 0;
+         var score = 0;
+         var navigationErrorCount = 0;
+         var limit = 5;
+         
+         var hasVisitedLoc0 = false;
+         var hasVisitedLoc1 = false;
+         var hasVisitedLoc2 = false;
+         var hasVisitedLoc3 = false;
+         var hasVisitedLoc4 = false;
+                  
+         
+         function init()
+         {
+            look();
+         }
+         
+                
+         function btnNorth_click()
+         {
+            if (currentLocation === 0)
+            {
+               currentLocation = 1;
+               look();               
+            }
+            else
+            {
+              if (currentLocation === 3)
+              {
+                 currentLocation = 0;
+                 look();            
+              }
+              else
+              {
+                 navigationError(); 
+              }
+            }            
+         }
+
+         function btnSouth_click()
+         {
+            if (currentLocation === 1) {
+               currentLocation = 0;
+               look();
+            } else {
+              if (currentLocation === 0) {
+                 currentLocation = 3;
+                 look();
+              } else {
+                 navigationError(); 
+              }
+            }
+         }
+
+         function btnEast_click() {
+            if (currentLocation === 4) {
+               currentLocation = 0;
+               look();
+            } else {
+              if (currentLocation === 0) {
+                 currentLocation = 2;
+                 look();
+              } else {
+                 navigationError(); 
+              }
+            }
+         }
+
+         function btnWest_click() {
+            if (currentLocation === 2) {
+               currentLocation = 0;
+               look();
+            } else {
+              if (currentLocation === 0) {
+                 currentLocation = 4;
+                 look();
+              } else {
+                 navigationError(); 
+              }
+            }
+         }
+                  
+       
+         function look() {
+            var desc = "";
+            switch(currentLocation) {
+               case 0: desc = "Welcome to Manchester at Old Trafford.";
+                       break;
+               case 1: desc = "You are in the changing room";
+                       break; 
+               case 2: desc = "Welcome to Manchester United. Follow me to come meet the manager in his office.";
+                       break;
+               case 3: desc = "Step on the pitch and commence training with Anthony Martial and Romelu Lukaku.";
+                       break;
+               case 4: desc = "Meeting with Jose ASAP!";
+                       break;
+               default: desc = "Wrong Move! You are no longer wanted by the club you are now effectiively released";
+          }
+            checkScore();
+            desc = desc + "\n" + "Score: " + score ;
+            displayMessage(desc);
+         }
+
+         function navigationError() {
+            navigationErrorCount = navigationErrorCount + 1;
+            if (navigationErrorCount < limit) {
+               displayMessage("You are no longer wanted by the club you are now effectiively released.");
+            } else {
+               displayMessage("OHH MY GOODNESS NO!!!!");
+            }            
+         }
+
+         function checkScore() {
+            if (! hasVisitedLoc0) {            
+               if (currentLocation === 0) {
+                  score = score + 5;
+                  hasVisitedLoc0 = true;
+               }
+            } else if ( (! hasVisitedLoc1) && (currentLocation === 1) ) {            
+                  score = score + 5;
+                  hasVisitedLoc1 = true;
+            } else if ( (! hasVisitedLoc2) && (currentLocation === 2) ) {            
+                  score = score + 5;
+                  hasVisitedLoc2 = true;
+            } else if ( (! hasVisitedLoc3) && (currentLocation === 3) ) {            
+                  score = score + 5;
+                  hasVisitedLoc3 = true;
+            } else if ( (! hasVisitedLoc4) && (currentLocation === 4) ) {            
+                  score = score + 5;
+                  hasVisitedLoc4 = true;
+            }            
+         }
+
+       
+         function displayMessage(msg) {
+            var target = document.getElementById("taMain");
+            target.value = msg + "\n\n" + target.value;
+         }
+      </script>
+   </head>
+   <body onload="init();">
+       <textarea id="taMain" rows="8" cols="32"></textarea>
+       
+       <br>
+      
+
+                              
+       
+       <br>
+       <input type="button" 
+              value="North"
+              onclick="btnNorth_click();">
+       <input type="button" 
+              value="South"
+              onclick="btnSouth_click();">
+       <input type="button" 
+              value="East"
+              onclick="btnEast_click();">
+       <input type="button" 
+              value="West"
+              onclick="btnWest_click();">
+              
+   </body>
+</html>
