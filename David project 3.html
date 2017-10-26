@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+	David Nkansah-Siriboe 
+	CMPT120 
+	20 October 2017 
+ -->
+
+
+<meta charset="utf-8">
+
+<head>
+    <title>
+        The Legend of Drogba
+    </title>
+
+</head>
+
+<body>
+    <h1>This is the amazing life of the legend Didier Drogba</h1>
+    <p>
+        Hello welcome to The Legend of Drogba, you will come for the ride through the andventurous life of Dider Drogba. If you have any questions shoot me an email at <a href="mailto:davidsiriboe@gmail.com">davidsiriboe@gmail.com</a>
+    </p>
+
+    <script type="text/javascript">
+        window.onload = init;
+
+        function init() {
+            look();
+        }
+
+        var score = 0;
+        var Location = 0;
+
+        var ArriveLoc0 = false;
+        var ArriveLoc1 = false;
+        var ArriveLoc2 = false;
+        var ArriveLoc3 = false;
+        var ArriveLoc4 = false;
+        var ArriveLoc5 = false;
+
+        function btnNorth_click() {
+            if (Location === 0) {
+
+                displayMessage("You cannot go that way");
+
+                look();
+            } else if (Location === 1) {
+                displayMessage("You cannot go that way");
+
+
+                look();
+
+
+            } else if (Location === 2) {
+
+                displayMessage("You cannot go that way");
+                look();
+            } else if (Location === 3) {
+                Location = 0;
+                score += 5;
+                look();
+            } else if (Location === 4) {
+                Location = 1;
+                score += 5;
+                look();
+            } else if (Location === 5) {
+                Location = 2;
+                score += 5;
+                look();
+            }
+
+        }
+
+        function btnSouth_click() {
+            if (Location === 0) {
+                Location = 3;
+                score += 5;
+                look();
+            } else if (Location === 1) {
+                Location = 4;
+                score += 5;
+                look();
+
+            } else if (Location === 2) {
+                Location = 5
+                score += 5;
+                look();
+
+            } else if (Location === 3) {
+                displayMessage("You cannot go that way");
+                look();
+            } else if (Location === 4) {
+                displayMessage("You cannot go that way");
+                look();
+
+            } else if (Location === 5) {
+                displayMessage("You cannot go that way");
+                look();
+            }
+
+        }
+
+        function btnWest_click() {
+            if (Location === 0) {
+
+                displayMessage("You cannot go that way");
+                look();
+            } else if (Location === 1) {
+                Location = 0;
+                score += 5;
+                look();
+
+            } else if (Location === 2) {
+                Loctaion = 1;
+                score += 5;
+                look();
+
+            } else if (Location === 3) {
+                displayMessage("You cannot go that way");
+                look();
+
+            } else if (Location === 4) {
+                Location = 3;
+                score += 5;
+                look();
+            } else if (Location === 5) {
+                Location = 4;
+                score += 5;
+                look();
+            }
+
+
+        }
+
+        function btnEast_click() {
+            if (Location === 0) {
+                Location = 1;
+                score += 5;
+                look();
+            } else if (Location === 1) {
+                Location = 2
+                score += 5;
+                look();
+
+            } else if (Location === 2) {
+                displayMessage("You cannot go that way");
+                look();
+
+
+            } else if (Location === 3) {
+                Location = 4;
+                score += 5;
+                look();
+            } else if (Location === 4) {
+                Location = 5;
+                score += 5;
+                look();
+            } else if (Location === 5) {
+                displayMessage("You cannot go that way");
+                look();
+            }
+        }
+
+        function look() {
+            var desc = "";
+            switch (Location) {
+                case 0:
+                    desc = "You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trials.";
+                    break;
+                case 1:
+                    desc = "You are in France with your uncle Didier. You have a trial with Guingamp tomorow morning.";
+                    break;
+                case 2:
+                    desc = "You just scored the winning goal for Marseille in the Coupe de France Final @ the Stade Veledrome.";
+                    break;
+                case 3:
+                    desc = "You are in London, England with Chelsea manager Jose Mourinho signing your new five-year contract.";
+                    break;
+                case 4:
+                    desc = "You are walking down the tunnel alone after being sent off in the Champions League Final in Moscow, disgraced and letting your team down.";
+                    break;
+                case 5:
+                    desc = "You are holding the Champions League trophy in Munich after scoring the most memorable goal in club history and the penalty kick to win Chelsea's first ever Champions League.";
+
+                default:
+                    desc = "You have suffered a long term injury, your career is over !!!!!";
+            }
+
+            desc = desc;
+            displayMessage(desc);
+            document.getElementById("Score").innerHTML = "Score: " + score;
+        }
+
+        function displayMessage(msg) {
+            var target = document.getElementById("message");
+            target.value = msg + "\n\n" + target.value;
+        }
+    </script>
+
+
+    <textarea id="message" name="message" rows="10" cols="80"></textarea> Command:
+    <input type="text" id="txtCommand" name="txtCommand">
+    <input type="button" value="Go" onclick="btnGo_click();">
+
+
+    <br>
+
+    <br>
+    <div id="Score">
+        Score=0
+    </div>
+    <input type="button" value="North" onclick="btnNorth_click();">
+    <input type="button" value="South" onclick="btnSouth_click();">
+    <input type="button" value="East" onclick="btnEast_click();">
+    <input type="button" value="West" onclick="btnWest_click();">
+
+</body>
+
+</html>
