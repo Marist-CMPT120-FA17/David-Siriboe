@@ -52,7 +52,7 @@ window.onload = init;
                 score += 5;
                 Location = 1; 
                 break;
-          case 5;
+          case 5:
                 Marseille();
                 score += 5;
                 Location = 2; 
