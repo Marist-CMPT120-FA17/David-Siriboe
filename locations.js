@@ -1,348 +1,475 @@
 
-
 window.onload = init;
 
-        function init() {
-            var message = "You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the changing room where you find cleats."; 
-          displayMessage(message);  
-        }
+function init() {
+    var message = "You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the changing room where you find cleats.";
+    displayMessage(message);
+    buttonNorth = document.getElementById("buttonNorth");
+    buttonNorth.disabled = true;
+    buttonSouth = document.getElementById("buttonSouth");
+    buttonEast = document.getElementById("buttonEast");
+    buttonWest = document.getElementById("buttonWest");
+    buttonWest.disabled = true;
+}
 
-        var score = 0;
-        var Location = 0;
+var score = 0;
+var LocationNumber = 0;
 
-        var position0 = false;
-        var position1 = false;
-        var position2 = false;
-        var position3 = false;
-        var position4 = false;
-        var position5 = false; 
+var position0 = false;
+var position1 = false;
+var position2 = false;
+var position3 = false;
+var position4 = false;
+var position5 = false;
+
+var buttonNorth;
+var buttonSouth;
+var buttonEast;
+var buttonWest;
+
+var Locations = [];
+
+var Soccerbag = [];
+
+function item(id, name, description) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.toString = function() {
+        return this.description;
+    }
+}
+
+var soccercleats = new item(0, "soccer cleats", "Nike Mercurial Vapor", "Nice and Clean");
+var letter = new item(1, "letter", "Letter from Coach", "Very Urgent");
+var money = new item(2, "money", "New contract offer", "IMPORTANT");
+var silverware = new item(3, "silverware", "Champions League Champions", "LOVELY")
+Soccerbag = [soccercleats, letter, money, silverware];
+
+
+function Location(id, name, description, item) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.item = item;
+    this.toString = function() {
+        return this.description;
+    }
+}
+ 
+
+function takeitem() {
+  var checkItem = locations[LocationNumber];
+  if (checkItem.item === null) {
+    var message = "There is nothing to take here."
+    displayMessage(message)
+  } else {
+    inventory.push(items[LocationNumber].name);
+    displayMessage("You have picked up " + items[LocationNumber].name);
+    locations[LocationNumber].item = null;
+  }
+} 
 
 
 
 
+var ivorycoast = new Location(0,"ivorycoast","You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the changing room where you find cleats.","soccercleats")
+var Guingamp = new Location(1, "Guingamp", "You are in France with your uncle Didier. You have a trial with Guingamp tomorow morning.", "null");
+var Marseille = new Location(2, "Marseille", "You just scored the winning goal for Marseille in the Coupe de France Final @ the Stade Veledrome.", "null");
+var London = new Location(3, "London", "You are in London, England with Chelsea manager Jose Mourinho signing your new five-year contract.", "null");
+var Moscow = new Location(4, "Moscow", "You are walking down the tunnel alone after being sent off in the Champions League Final in Moscow, disgraced and letting your team down.", "null");
+var Munich = new Location(5, "Munich", "You are holding the Champions League trophy in Munich after scoring the most memorable goal in club history and the penalty kick to win Chelsea's first ever Champions League.", "sliverware");
+var Home = new Location(6, "Home", "You walk into your bedroom after training and open the letter. The letter states that you have played your last ever match for chelsea and will be moving to play in China.", "letter");
+var Airport = new Location(7, "Airport", "You are at London Heathrow Airport about to board your flight to China.", "null");
+var Shanghai = new Location(8, "Shanghai", "You are in Shanghai, China and you are at the training ground of Shanghai Shenhua getting ready for your first team session.", "money");
+var Montreal = new Location(9, "Montreal", "You have been transfered to the Montreal Impact, you are now in Montreal where you will end you amazing career in the MLS.", "null");
+Locations = [ivorycoast, Guingamp, Marseille, London, Moscow, Munich, Home, Airport, Shanghai, Montreal];
 
-        
+function btnNorth_click() {
 
-        function btnNorth_click() {
-            switch (Location === 0) { 
-              case 0:
-                displayMessage("You cannot go that way");
-                break;
-                
-           case 1:
-                displayMessage("You cannot go that way"); 
-                break;
+    switch (LocationNumber) {
+        case 0:
+            displayMessage("You cannot go that way");
+            break;
 
-
-                
+        case 1:
+            displayMessage("You cannot go that way");
+            break;
 
 
-            case 2:
 
-                displayMessage("You cannot go that way"); 
-                break;
-                
-           case 3:
-                ivorycoast();
-                score += 5;
-                Location = 0; 
-                break;
-            case 4:
-                Guingamp();
-                score += 5;
-                Location = 1; 
-                break;
-          case 5:
-                Marseille();
-                score += 5;
-                Location = 2; 
-                break;
-            case 6:
-              London(); 
-              score += 5; 
-              Location = 3; 
-              break;
-            case 7:
-              Mosccow();  
-              score += 5; 
-             Location = 4; 
-             break;
-          case 8:
-            Munich(); 
-            score += 5; 
-            Location = 5; 
+
+        case 2:
+
+            displayMessage("You cannot go that way");
+            break;
+
+        case 3:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 0;
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+        case 4:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 1;
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonEast.disabled = false;
+            buttonWest.disabled = false;
+            break;
+        case 5:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 2;
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonEast.disabled = true;
+            buttonWest.disabled = false;
+            break;
+        case 6:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 3;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+        case 7:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 4;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+        case 8:
+            //Munich();
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 5;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = false;
+            buttonEast.disabled = true;
             break;
         case 9:
-            Home(); 
-            score += 5; 
-            Location = 6; 
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 6;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
             break;
-        } 
-         scoreElement = document.getElementById("Score"); 
-            scoreElement.innerHTML = "Score : " + score;
+    }
+    scoreElement = document.getElementById("Score");
+    scoreElement.innerHTML = "Score : " + score;
 
-        }
+}
 
-        function btnSouth_click() {
-            switch(Location === 0) { 
-              case 0:
-                London();
-                score += 5; 
-                Location = 3; 
-                break;
-                
-           case 1:
-                Moscow();
-                score += 5;
-                Location = 4; 
-                break;
+function btnSouth_click() {
+    switch (LocationNumber) {
+        case 0:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 3;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
 
-           case 2:
-                Munich();
-                score += 5;
-                Location = 5; 
-                break;
+        case 1:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 4;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = false;
+            buttonEast.disabled = false;
+            break;
 
-           case 3:
-                displayMessage("You cannot go that way"); 
-                break;
-                
-           case 4:
-                displayMessage("You cannot go that way"); 
-                break;
-               
+        case 2:
+            displayMessage(Locations[LocationNumber].description);
+            score += 5;
+            LocationNumber = 5;
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = false;
+            buttonEast.disabled = true;
+            break;
 
-            case 5:
-                displayMessage("You cannot go that way"); 
-                break;
-                
-          case 6:
-            Location = 9; 
-            score += 5; 
-           Montreal(); 
-           break;
-      case 7:
-           displayMessage("You cannot go that way"); 
-           break;
-                
-       case 8:
-           displayMessage("You cannot go that way"); 
-           break;
-                
+        case 3:
+            LocationNumber = 6;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+
+            break;
+
+        case 4:
+            LocationNumber = 7;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = true;
+            buttonWest.disabled = false;
+            buttonEast.disabled = false;
+            break;
+
+
+        case 5:
+            LocationNumber = 8;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = true;
+            buttonWest.disabled = false;
+            buttonEast.disabled = true;
+            break;
+
+        case 6:
+            LocationNumber = 9;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = true;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+        case 7:
+            displayMessage("You cannot go that way");
+            break;
+
+        case 8:
+            displayMessage("You cannot go that way");
+            break;
+
         case 9:
-          displayMessage("You cannot go that way"); 
-          break;
-               
-        } 
-         scoreElement = document.getElementById("Score"); 
-            scoreElement.innerHTML = "Score : " + score;
-           
+            displayMessage("You cannot go that way");
+            break;
 
+    }
+    scoreElement = document.getElementById("Score");
+    scoreElement.innerHTML = "Score : " + score;
+
+    console.log(Location);
+}
+
+function btnWest_click() {
+    switch (LocationNumber) {
+        case 0:
+            displayMessage("You cannot go that way");
+            break;
+
+        case 1:
+            LocationNumber = 0;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+
+        case 2:
+            LocationNumber = 1;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonEast.disabled = false;
+            buttonWest.disabled = false;
+            break;
+
+        case 3:
+            displayMessage("You cannot go that way");
+            break;
+
+
+        case 4:
+            LocationNumber = 3;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+        case 5:
+            LocationNumber = 4;
+            score += 5;
+           displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = false;
+            buttonEast.disabled = false;
+            break;
+        case 6:
+            displayMessage("You cannot go that way");
+            break;
+
+        case 7:
+            LocationNumber = 6;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = true;
+            buttonEast.disabled = false;
+            break;
+        case 8:
+            LocationNumber = 7;
+            score += 5;
+             displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = true;
+            buttonWest.disabled = false;
+            buttonEast.disabled = false;
+            break;
+        case 9:
+            displayMessage("You cannot go that way");
+            break;
+
+    }
+    scoreElement = document.getElementById("Score");
+    scoreElement.innerHTML = "Score : " + score;
+
+
+}
+
+function btnEast_click() {
+    switch (LocationNumber) {
+        case 0:
+            LocationNumber = 1;
+            score += 5;
+             displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonEast.disabled = false;
+            buttonWest.disabled = false;
+            break;
+        case 1:
+            LocationNumber = 2;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = true;
+            buttonSouth.disabled = false;
+            buttonEast.disabled = true;
+            buttonWest.disabled = false;
+            break;
+
+        case 2:
+            displayMessage("You cannot go that way");
+            break;
+
+        case 3:
+            LocationNumber = 4;
+            score += 5;
+             displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = false;
+            buttonEast.disabled = false;
+            break;
+        case 4:
+            LocationNumber = 5;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = false;
+            buttonWest.disabled = false;
+            buttonEast.disabled = true;
+            break;
+        case 5:
+            displayMessage("You cannot go that way");
+            break;
+
+        case 6:
+            LocationNumber = 7;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = true;
+            buttonWest.disabled = false;
+            buttonEast.disabled = false;
+            break;
+        case 7:
+            LocationNumber = 8;
+            score += 5;
+            displayMessage(Locations[LocationNumber].description);
+            buttonNorth.disabled = false;
+            buttonSouth.disabled = true;
+            buttonWest.disabled = false;
+            buttonEast.disabled = true;
+            break;
+        case 8:
+            displayMessage("You cannot go that way");
+            break;
+
+        case 9:
+            displayMessage("You cannot go that way");
+            break;
+
+    }
+    scoreElement = document.getElementById("Score");
+    scoreElement.innerHTML = "Score : " + score;
+}
+
+
+
+
+function btnGo_click() {
+    var Text = document.getElementById("txtCommand").value;
+    var answer = "";
+    var assistanceMessage = "You must enter the following commands n, s, e, w, N, S, E, W,Soccerbag";
+    var failureMessage = "Invalid Command. Only the following commands, n,s,e,w,N,S,E,W,Soccerbag are valid commands.";
+    if (Text === "n" || Text === "N") {
+        answer = btnNorth_click();
+    } else if (Text === "s" || Text === "S") {
+        answer = btnSouth_click();
+    } else if (Text === "e" || Text === "E") {
+        answer = btnEast_click();
+    } else if (Text === "w" || Text === "W") {
+        answer = btnWest_click();
+    } else if (Text === "help" || Text === "HELP") {
+        var textarea = document.getElementById("message");
+        textarea.value = assistanceMessage;
+    } else if (Text === "Soccerbag") {
+        var textarea = document.getElementById("message");
+        var message = "";
+        for (var i = 0; i < Soccerbag.length; i++) {
+
+            message = message + Soccerbag[i].name + ", ";
         }
-
-        function btnWest_click() {
-            switch (Location === 0) { 
-              case 0:
-                displayMessage("You cannot go that way"); 
-                break;
-                
-            case 1:
-                Location = 0;
-                score += 5;
-                ivorycoast(); 
-                break;
-
-            case 2:
-                Location = 1;
-                score += 5;
-                Guingamp(); 
-                break;
-
-            case 3:
-                displayMessage("You cannot go that way"); 
-                break;
-                
-
-            case 4:
-                Location = 3;
-                score += 5;
-                London(); 
-                break;
-           case 5:
-                Location = 4;
-                score += 5;
-                Moscow(); 
-                break;
-            case 6:
-              displayMessage("You cannot go that way");  
-              break;
-              
-           case 7:
-              Location = 6;
-              score += 5; 
-              Home(); 
-              break;
-            case 8 :
-              Location = 7; 
-              score += 5; 
-              Airport(); 
-              break;
-            case 9:
-              displayMessage("You cannot go that way"); 
-              break;
-                
-            } 
-             scoreElement = document.getElementById("Score"); 
-            scoreElement.innerHTML = "Score : " + score;
-
-
+        textarea.value = message;
+    } else if (Text === "Locations") {
+        var textarea = document.getElementById("message");
+        var message = "";
+        for (var i = 0; i < Locations.length; i++) {
+            message = message + Locations[i].name + ", ";
         }
-
-        function btnEast_click() {
-            switch (Location)  { 
-              case 0:
-                Location = 1;
-                score += 5;
-                Guingamp(); 
-                break;
-            case 1:
-                Location = 2;
-                score += 5;
-                Marseille(); 
-                break;
-
-           case 2: 
-                displayMessage("You cannot go that way"); 
-                break;
-
-            case 3 : 
-                Location = 4;
-                score += 5;
-                Moscow(); 
-                break;
-            case 4:
-                Location = 5;
-                score += 5;
-                Munich(); 
-                break;
-            case 5:
-                displayMessage("You cannot go that way"); 
-                break;
-                
-            case 6:
-              Location = 7; 
-              score += 5; 
-              Airport(); 
-              break;
-            case 7: 
-              Location = 8; 
-              score += 5; 
-              Shanghai(); 
-              break;
-            case 8 :
-               displayMessage("You cannot go that way"); 
-               break;
-                
-            case 9:
-               displayMessage("You cannot go that way"); 
-               break;
-                
-            } 
-            scoreElement = document.getElementById("Score"); 
-            scoreElement.innerHTML = "Score : " + score;
-        } 
+        textarea.value = message
 
 
+    } else {
+        var textarea = document.getElementById("message");
+        textarea.value = failureMessage;
+    }
 
+}
 
-        function ivorycoast(){
-          var message = "You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the chaanging room where you find cleats."; 
-          displayMessage(message);  
-          Location = 0;
-        }
-
-        function Guingamp(){
-          var message = "You are in France with your uncle Didier. You have a trial with Guingamp tomorow morning." ;
-          displayMessage(message); 
-          Location = 1;
-        } 
-
-
-        function Marseille(){
-          var message = "You just scored the winning goal for Marseille in the Coupe de France Final @ the Stade Veledrome."; 
-          displayMessage(message); 
-          Location = 2;
-        } 
-
-        function London(){
-          var message = "You are in London, England with Chelsea manager Jose Mourinho signing your new five-year contract."; 
-          displayMessage(message);  
-          Location = 3;
-        } 
-
-        function Moscow(){
-          var message = "You are walking down the tunnel alone after being sent off in the Champions League Final in Moscow, disgraced and letting your team down."; 
-          displayMessage(message); 
-          Location = 4;
-        } 
-
-        function Munich(){
-          var message = "You are holding the Champions League trophy in Munich after scoring the most memorable goal in club history and the penalty kick to win Chelsea's first ever Champions League."; 
-          displayMessage(message); 
-          Location = 5;
-        } 
-
-
-        function Home(){  
-          var message = "You walk into your bedroom after training and open the letter. The letter states that you have played your last ever match for chelsea and will be moving to play in China."; 
-          displayMessage(message); 
-          Location = 6;
-        } 
-
-        function Airport(){
-          var message = "You are at London Heathrow Airport about to board your flight to China."; 
-          displayMessage(message); 
-          Location = 7;
-        } 
-
-        function Shanghai(){
-          var message = "You are in Shanghai, China and you are at the training ground of Shanghai Shenhua getting ready for your first team session.";
-          displayMessage(message); 
-          Location = 8;
-        } 
-
-        function Montreal(){
-          var message = "You have been transfered to the Montreal Impact, you are now in Montreal where you will end you amazing career in the MLS."; 
-          displayMessage(message); 
-          Location = 9;
-        }
-    
-
-       
-
-        function btnGo_click() {
-          var Text = document.getElementById("txtCommand").value;
-          var answer = "";
-          var assistanceMessage = "You must enter the following commands n, s, e, w, N, S, E, W.";
-          var failureMessage = "Invalid Command. Only the following commands, n,s,e,w,N,S,E,W are valid commands.";
-          if (Text === "n" || Text === "N") {
-            answer = btnNorth_click();
-          } else if (Text === "s" || Text === "S") {
-            answer = btnSouth_click();
-          } else if (Text === "e" || Text === "E") {
-            answer = btnEast_click();
-          } else if (Text === "w" || Text === "W") {
-            answer = btnWest_click();
-          }else if (Text === "help" || Text === "HELP"){
-            var textarea = document.getElementById("message");
-            textarea.value = assistanceMessage;
-          } else {
-            var textarea = document.getElementById("message");
-            textarea.value = failureMessage;
-          }
-
-          }
-        function displayMessage(msg) {
-            var target = document.getElementById("message");
-            target.value = msg + "\n\n" + target.value;
-        }
+function displayMessage(msg) {
+    var target = document.getElementById("message");
+    target.value = msg + "\n\n" + target.value;
+}
