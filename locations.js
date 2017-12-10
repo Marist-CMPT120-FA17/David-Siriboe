@@ -1,34 +1,19 @@
-
 window.onload = init;
 
 function init() {
-    var message = "You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the changing room where you find cleats.";
-    displayMessage(message);
-    buttonNorth = document.getElementById("buttonNorth");
-    buttonNorth.disabled = true;
-    buttonSouth = document.getElementById("buttonSouth");
-    buttonEast = document.getElementById("buttonEast");
-    buttonWest = document.getElementById("buttonWest");
-    buttonWest.disabled = true;
+    look();
+    disable();
 }
 
 var score = 0;
 var LocationNumber = 0;
+var north = 0;
+var south = 1;
+var east = 2;
+var west = 3;
+var playeractive = true;
 
-var position0 = false;
-var position1 = false;
-var position2 = false;
-var position3 = false;
-var position4 = false;
-var position5 = false;
-
-var buttonNorth;
-var buttonSouth;
-var buttonEast;
-var buttonWest;
-
-var Locations = [];
-
+var Items = [];
 var Soccerbag = [];
 
 function item(id, name, description) {
@@ -41,10 +26,21 @@ function item(id, name, description) {
 }
 
 var soccercleats = new item(0, "soccer cleats", "Nike Mercurial Vapor", "Nice and Clean");
-var letter = new item(1, "letter", "Letter from Coach", "Very Urgent");
-var money = new item(2, "money", "New contract offer", "IMPORTANT");
-var silverware = new item(3, "silverware", "Champions League Champions", "LOVELY")
-Soccerbag = [soccercleats, letter, money, silverware];
+var letter = new item(6, "letter", "Letter from Coach", "Very Urgent");
+var money = new item(8, "money", "New contract offer", "IMPORTANT");
+var silverware = new item(5, "silverware", "Champions League Champions", "LOVELY")
+
+function soccerstuff() {
+    var message = "Soccerbag:\n" + Soccerbag;
+    UpdateInventory(message);
+}
+
+
+var items = new Array();
+items[0] = soccercleats;
+items[6] = letter;
+items[8] = money;
+items[5] = silverware;
 
 
 function Location(id, name, description, item) {
@@ -56,24 +52,32 @@ function Location(id, name, description, item) {
         return this.description;
     }
 }
- 
+
 
 function takeitem() {
-  var checkItem = locations[LocationNumber];
-  if (checkItem.item === null) {
-    var message = "There is nothing to take here."
-    displayMessage(message)
-  } else {
-    inventory.push(items[LocationNumber].name);
-    displayMessage("You have picked up " + items[LocationNumber].name);
-    locations[LocationNumber].item = null;
-  }
-} 
+    var checkItem = Locations[LocationNumber];
+    if (checkItem.item === null) {
+        var message = "There is nothing to take here."
+        displayMessage(message)
+    } else {
+        Soccerbag.push(items[LocationNumber].name);
+        displayMessage("You have picked up " + items[LocationNumber].name);
+        Locations[LocationNumber].item = null;
+    }
+}
+
+function look() {
+    var message = "";
+    message = Locations[LocationNumber];
+    var checkItem = Locations[LocationNumber].item;
+    if (checkItem !== null) {
+        message = message + checkItem;
+    }
+    displayMessage(message);
+}
 
 
-
-
-var ivorycoast = new Location(0,"ivorycoast","You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the changing room where you find cleats.","soccercleats")
+var ivorycoast = new Location(0, "ivorycoast", "You are in Abdijan, Ivory Coast. You are at the Right To Dream Soccer Academy trails, you are in the changing room where you find cleats.", "soccercleats")
 var Guingamp = new Location(1, "Guingamp", "You are in France with your uncle Didier. You have a trial with Guingamp tomorow morning.", "null");
 var Marseille = new Location(2, "Marseille", "You just scored the winning goal for Marseille in the Coupe de France Final @ the Stade Veledrome.", "null");
 var London = new Location(3, "London", "You are in London, England with Chelsea manager Jose Mourinho signing your new five-year contract.", "null");
@@ -83,393 +87,130 @@ var Home = new Location(6, "Home", "You walk into your bedroom after training an
 var Airport = new Location(7, "Airport", "You are at London Heathrow Airport about to board your flight to China.", "null");
 var Shanghai = new Location(8, "Shanghai", "You are in Shanghai, China and you are at the training ground of Shanghai Shenhua getting ready for your first team session.", "money");
 var Montreal = new Location(9, "Montreal", "You have been transfered to the Montreal Impact, you are now in Montreal where you will end you amazing career in the MLS.", "null");
-Locations = [ivorycoast, Guingamp, Marseille, London, Moscow, Munich, Home, Airport, Shanghai, Montreal];
+var Locations = [ivorycoast, Guingamp, Marseille, London, Moscow, Munich, Home, Airport, Shanghai, Montreal];
+var Button = ["buttonNorth", "buttonSouth", "buttonEast", "buttonWest"];
+var Navigationmatrix = [ //N,S,E,W 
+    [-1, 3, 1, -1],
+    [-1, 4, 2, 0],
+    [-1, 5, -1, 1],
+    [0, 6, 4, -1],
+    [1, 7, 5, 3],
+    [2, 8, -1, 4],
+    [3, 9, 7, -1],
+    [4, -1, 8, 6],
+    [5, -1, -1, 7],
+    [6, -1, -1, -1]
+];
+var Disablematrix = [
+    [1, 0, 0, 1],
+    [1, 0, 0, 0],
+    [1, 0, 1, 0],
+    [0, 0, 0, 1],
+    [0, 0, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+    [0, 1, 0, 0],
+    [0, 1, 1, 0],
+    [0, 1, 1, 1],
+];
 
 function btnNorth_click() {
-
-    switch (LocationNumber) {
-        case 0:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 1:
-            displayMessage("You cannot go that way");
-            break;
-
-
-
-
-        case 2:
-
-            displayMessage("You cannot go that way");
-            break;
-
-        case 3:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 0;
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-        case 4:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 1;
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonEast.disabled = false;
-            buttonWest.disabled = false;
-            break;
-        case 5:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 2;
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonEast.disabled = true;
-            buttonWest.disabled = false;
-            break;
-        case 6:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 3;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-        case 7:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 4;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-        case 8:
-            //Munich();
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 5;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = false;
-            buttonEast.disabled = true;
-            break;
-        case 9:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 6;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-    }
-    scoreElement = document.getElementById("Score");
-    scoreElement.innerHTML = "Score : " + score;
-
+    NextLocation(north);
+    look();
 }
 
 function btnSouth_click() {
-    switch (LocationNumber) {
-        case 0:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 3;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-
-        case 1:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 4;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = false;
-            buttonEast.disabled = false;
-            break;
-
-        case 2:
-            displayMessage(Locations[LocationNumber].description);
-            score += 5;
-            LocationNumber = 5;
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = false;
-            buttonEast.disabled = true;
-            break;
-
-        case 3:
-            LocationNumber = 6;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-
-            break;
-
-        case 4:
-            LocationNumber = 7;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = true;
-            buttonWest.disabled = false;
-            buttonEast.disabled = false;
-            break;
-
-
-        case 5:
-            LocationNumber = 8;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = true;
-            buttonWest.disabled = false;
-            buttonEast.disabled = true;
-            break;
-
-        case 6:
-            LocationNumber = 9;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = true;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-        case 7:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 8:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 9:
-            displayMessage("You cannot go that way");
-            break;
-
-    }
-    scoreElement = document.getElementById("Score");
-    scoreElement.innerHTML = "Score : " + score;
-
-    console.log(Location);
-}
-
-function btnWest_click() {
-    switch (LocationNumber) {
-        case 0:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 1:
-            LocationNumber = 0;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-
-        case 2:
-            LocationNumber = 1;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonEast.disabled = false;
-            buttonWest.disabled = false;
-            break;
-
-        case 3:
-            displayMessage("You cannot go that way");
-            break;
-
-
-        case 4:
-            LocationNumber = 3;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-        case 5:
-            LocationNumber = 4;
-            score += 5;
-           displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = false;
-            buttonEast.disabled = false;
-            break;
-        case 6:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 7:
-            LocationNumber = 6;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = true;
-            buttonEast.disabled = false;
-            break;
-        case 8:
-            LocationNumber = 7;
-            score += 5;
-             displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = true;
-            buttonWest.disabled = false;
-            buttonEast.disabled = false;
-            break;
-        case 9:
-            displayMessage("You cannot go that way");
-            break;
-
-    }
-    scoreElement = document.getElementById("Score");
-    scoreElement.innerHTML = "Score : " + score;
-
-
+    NextLocation(south);
+    look();
 }
 
 function btnEast_click() {
-    switch (LocationNumber) {
-        case 0:
-            LocationNumber = 1;
-            score += 5;
-             displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonEast.disabled = false;
-            buttonWest.disabled = false;
-            break;
-        case 1:
-            LocationNumber = 2;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = true;
-            buttonSouth.disabled = false;
-            buttonEast.disabled = true;
-            buttonWest.disabled = false;
-            break;
-
-        case 2:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 3:
-            LocationNumber = 4;
-            score += 5;
-             displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = false;
-            buttonEast.disabled = false;
-            break;
-        case 4:
-            LocationNumber = 5;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = false;
-            buttonWest.disabled = false;
-            buttonEast.disabled = true;
-            break;
-        case 5:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 6:
-            LocationNumber = 7;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = true;
-            buttonWest.disabled = false;
-            buttonEast.disabled = false;
-            break;
-        case 7:
-            LocationNumber = 8;
-            score += 5;
-            displayMessage(Locations[LocationNumber].description);
-            buttonNorth.disabled = false;
-            buttonSouth.disabled = true;
-            buttonWest.disabled = false;
-            buttonEast.disabled = true;
-            break;
-        case 8:
-            displayMessage("You cannot go that way");
-            break;
-
-        case 9:
-            displayMessage("You cannot go that way");
-            break;
-
-    }
-    scoreElement = document.getElementById("Score");
-    scoreElement.innerHTML = "Score : " + score;
+    NextLocation(east);
+    look();
 }
 
+function btnWest_click() {
+    NextLocation(west);
+    look();
+}
 
-
-
-function btnGo_click() {
-    var Text = document.getElementById("txtCommand").value;
-    var answer = "";
-    var assistanceMessage = "You must enter the following commands n, s, e, w, N, S, E, W,Soccerbag";
-    var failureMessage = "Invalid Command. Only the following commands, n,s,e,w,N,S,E,W,Soccerbag are valid commands.";
-    if (Text === "n" || Text === "N") {
-        answer = btnNorth_click();
-    } else if (Text === "s" || Text === "S") {
-        answer = btnSouth_click();
-    } else if (Text === "e" || Text === "E") {
-        answer = btnEast_click();
-    } else if (Text === "w" || Text === "W") {
-        answer = btnWest_click();
-    } else if (Text === "help" || Text === "HELP") {
-        var textarea = document.getElementById("message");
-        textarea.value = assistanceMessage;
-    } else if (Text === "Soccerbag") {
-        var textarea = document.getElementById("message");
-        var message = "";
-        for (var i = 0; i < Soccerbag.length; i++) {
-
-            message = message + Soccerbag[i].name + ", ";
+function NextLocation(direction) {
+    var newlocation = Navigationmatrix[LocationNumber][direction];
+    if (newlocation >= 0) {
+        if (newlocation == 9 && Soccerbag.length == 4) {
+            LocationNumber = newlocation;
+            look();
+            displayMessage("You are now a Legend of the game of Football. Congratulations!!")
+            disable();
+        } else if (newlocation == 9) {
+            displayMessage("Slow down its not your time yet,turn back!")
+        } else {
+            LocationNumber = newlocation;
+            look();
+            disable();
+        } else {
+            displayMessage("YOU MAY NOT PROCEED!!!");
         }
-        textarea.value = message;
-    } else if (Text === "Locations") {
-        var textarea = document.getElementById("message");
-        var message = "";
-        for (var i = 0; i < Locations.length; i++) {
-            message = message + Locations[i].name + ", ";
-        }
-        textarea.value = message
-
-
-    } else {
-        var textarea = document.getElementById("message");
-        textarea.value = failureMessage;
+        Playerscore();
     }
 
-}
+    function disable() {
+        var Disable = 0;
+    }
 
-function displayMessage(msg) {
-    var target = document.getElementById("message");
-    target.value = msg + "\n\n" + target.value;
-}
+    function displayMessage(msg) {
+        var target = document.getElementById("message");
+        target.value = msg + "\n\n" + target.value;
+        for (j = 0; j < Button.length; j++) {
+            Disable = Disablematrix[LocationNumber][j];
+            if (Disable === 1) {
+                document.getElementById(btn[j]).disabled = true;
+            } else {
+                document.getElementById(Button[j]).disabled = false;
+            }
+        }
+    }
+
+    function Playerscore() {
+        var scored = Locations[LocationNumber];
+        if (scored.check === false) {
+            score += 5;
+            document.getElementById("Score").innerHTML = score;
+            scored.check = true;
+        }
+
+    }
+
+
+    function btnGo_click() {
+        var Text = document.getElementById("txtCommand").value;
+        Text = Text.toLowerCase();
+        var answer = "";
+        if (playeractive == true) {
+            if (Text === "n") {
+                Response = btnNorth_click();
+            } else if (Text === "s") {
+                Response = btnSouth_click();
+            } else if (Text === "e") {
+                Response = btnEast_click();
+            } else if (Text === "w") {
+                Response = btnWest_click();
+            } else if (Text === "help") {
+                HelpMessage();
+            } else if (Text === "Soccerbag") {
+                for (var i = 0; i < Soccerbag.length; ++i) {
+                    displayMessage(Soccerbag[i]);
+                }
+            } else if (Text === "take") {
+                takeitem();
+            } else {
+                alert("Invalid command.  Valid commands: N, S, E, W, Help, Inventory, Take, Soccerbag");
+            }
+        }
+
+    }
+
+    function displayMessage(msg) {
+        var target = document.getElementById("message");
+        target.value = msg + "\n\n" + target.value;
+    }
