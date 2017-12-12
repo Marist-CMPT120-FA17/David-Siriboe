@@ -164,7 +164,7 @@ function NextLocation(direction) {
         for (j = 0; j < Button.length; j++) {
             Disable = Disablematrix[LocationNumber][j];
             if (Disable === 1) {
-                document.getElementById(btn[j]).disabled = true;
+                document.getElementById(Button[j]).disabled = true;
             } else {
                 document.getElementById(Button[j]).disabled = false;
             }
@@ -210,7 +210,4 @@ function NextLocation(direction) {
 
     }
 
-    function displayMessage(msg) {
-        var target = document.getElementById("message");
-        target.value = msg + "\n\n" + target.value;
-    }
+  
